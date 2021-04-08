@@ -53,6 +53,7 @@ table {
 }
 
 td {
+	text-align: center;
 	height: 75px;
 	width: 75px;
 }
