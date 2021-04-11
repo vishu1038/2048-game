@@ -1,5 +1,5 @@
 body {
-	background-color: black;
+	background-color: #212F3C;
 	font-family: 'Open Sans', sans-serif;
 }
 
@@ -56,4 +56,6 @@ td {
 	text-align: center;
 	height: 75px;
 	width: 75px;
+	font-size: 30px;
+	background-color: #5D6D7E;
 }

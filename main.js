@@ -1,7 +1,8 @@
 var arr = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
-var prev =  [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+var prev = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+var score=0;
 
-function check() {
+function checkMove() {
 	let flag=0;
 	for(let i=0;i<4;i++) {
 		for(let j=0;j<4;j++) {
@@ -22,8 +23,53 @@ function assign() {
 
  }
 
-function rnd(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) ) + min;
+function rnd(min, max) {	
+	return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+function updateScore() {
+	if(score>9999) {
+		document.getElementById("score").style.fontSize = "30px" ;
+	}
+	document.getElementById("score").innerHTML = score;
+}
+
+function getColor(val) {
+	var color = "#5D6D7E";
+	switch(val) {
+		case 0: 	color = "#5D6D7E"; break;
+		case 2:		color = "#F6CED8"; break;
+		case 4:		color = "#F7BE81"; break;
+		case 8:		color = "#F3F781"; break;
+		case 16:	color = "#BEF781"; break;
+		case 32:	color = "#81F7D8"; break;
+		case 64:	color = "#58D3F7"; break;
+		case 128:	color = "#FA58F4"; break;
+		case 256:	color = "#A901DB"; break;
+		case 512:	color = "#01DF3A"; break;
+		case 1024:	color = "#28B463"; break;
+		case 2048:	color = "#D7DF01"; break;
+		default:	color = "#D7DF01";
+	}
+	return color;
+}
+
+function display() {
+	let x=0;
+	for(let i=0;i<4;i++) {
+		for(let j=0;j<4;j++) {
+			if(arr[i][j]==0) {
+				document.getElementById(x).innerHTML="";
+				document.getElementById(x).style.backgroundColor = getColor(arr[i][j]);
+				x++;
+			}
+			else {
+				document.getElementById(x).innerHTML=arr[i][j];
+				document.getElementById(x).style.backgroundColor = getColor(arr[i][j]);
+				x++;
+			}
+		}
+	}
 }
 
 function start() {
@@ -37,8 +83,7 @@ function start() {
 	x2--;
 	arr[~~(x1/4)][~~(x1%4)]=num[rnd(0,1)];
 	arr[~~(x2/4)][~~(x2%4)]=num[rnd(0,1)];
-	document.getElementById(x1).innerHTML=arr[~~(x1/4)][~~(x1%4)];
-	document.getElementById(x2).innerHTML=arr[~~(x2/4)][~~(x2%4)];
+	display();
 }
 
 function rannum() {
@@ -54,23 +99,6 @@ function rannum() {
 	}
 	y=num[rnd(0,1)];
 	arr[~~(x/4)][~~(x%4)]=y;
-	//document.getElementById(x).innerHTML=y;
-}
-
-function display() {
-	let x=0;
-	for(let i=0;i<4;i++) {
-		for(let j=0;j<4;j++) {
-			if(arr[i][j]==0) {
-				document.getElementById(x).innerHTML="";
-				x++;
-			}
-			else {
-				document.getElementById(x).innerHTML=arr[i][j];
-				x++;
-			}
-		}
-	}
 }
 
 start();
@@ -94,6 +122,7 @@ document.body.addEventListener("keyup", function(e) {
 					for(let j=0;j<3;j++) {
 						if(arr[i][j]==arr[i][j+1]) {
 							arr[i][j]+=arr[i][j+1];
+							score+=arr[i][j];
 							for(let k=j+1;k<3;k++) {
 								arr[i][k]=arr[i][k+1];
 							}
@@ -101,10 +130,11 @@ document.body.addEventListener("keyup", function(e) {
 						}
 					}
 				}
-			if(check()) {
+			if(checkMove()) {
 				rannum();
 			}
 			assign();
+			updateScore();
 			display();break;
 
 		case "ArrowRight":
@@ -123,6 +153,7 @@ document.body.addEventListener("keyup", function(e) {
 					for(let j=3;j>0;j--) {
 						if(arr[i][j]==arr[i][j-1]) {
 							arr[i][j]+=arr[i][j-1];
+							score+=arr[i][j];
 							for(let k=j-1;k>0;k--) {
 								arr[i][k]=arr[i][k-1];
 							}
@@ -130,10 +161,11 @@ document.body.addEventListener("keyup", function(e) {
 						}
 					}
 				}
-			if(check()) {
+			if(checkMove()) {
 				rannum();
 			}
 			assign();
+			updateScore();
 			display();break;
 
 		case "ArrowUp":
@@ -152,6 +184,7 @@ document.body.addEventListener("keyup", function(e) {
 					for(let j=0;j<3;j++) {
 						if(arr[j][i]==arr[j+1][i]) {
 							arr[j][i]+=arr[j+1][i];
+							score+=arr[j][i];
 							for(let k=j+1;k<3;k++) {
 								arr[k][i]=arr[k+1][i];
 							}
@@ -159,10 +192,11 @@ document.body.addEventListener("keyup", function(e) {
 						}
 					}
 				}
-			if(check()) {
+			if(checkMove()) {
 				rannum();
 			}
 			assign();
+			updateScore();
 			display();break;
 
 		case "ArrowDown":
@@ -181,6 +215,7 @@ document.body.addEventListener("keyup", function(e) {
 					for(let j=3;j>0;j--) {
 						if(arr[j][i]==arr[j-1][i]) {
 							arr[j][i]+=arr[j-1][i];
+							score+=arr[j][i];
 							for(let k=j-1;k>0;k--) {
 								arr[k][i]=arr[k-1][i];
 							}
@@ -188,10 +223,11 @@ document.body.addEventListener("keyup", function(e) {
 						}
 					}
 				}
-			if(check()) {
+			if(checkMove()) {
 				rannum();
 			}
 			assign();
+			updateScore();
 			display();break;
 
 	}
