@@ -1,4 +1,26 @@
 var arr = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+var prev =  [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+
+function check() {
+	let flag=0;
+	for(let i=0;i<4;i++) {
+		for(let j=0;j<4;j++) {
+			if(prev[i][j]!=arr[i][j]) {
+				flag=1;
+			}
+		}
+	}
+	return flag;
+}
+
+function assign() {
+ 	for(let i=0;i<4;i++) {
+		for(let j=0;j<4;j++) {
+			prev[i][j]=arr[i][j];
+		}
+	}
+
+ }
 
 function rnd(min, max) {
   return Math.floor(Math.random() * (max - min + 1) ) + min;
@@ -55,6 +77,7 @@ start();
 
 document.body.addEventListener("keyup", function(e) {
 	switch(e.key) {
+
 		case "ArrowLeft":
 				for(let i=0;i<4;i++) {
 					let count=0;
@@ -78,8 +101,12 @@ document.body.addEventListener("keyup", function(e) {
 						}
 					}
 				}
-			rannum();
+			if(check()) {
+				rannum();
+			}
+			assign();
 			display();break;
+
 		case "ArrowRight":
 				for(let i=0;i<4;i++) {
 					let count=3;
@@ -103,8 +130,12 @@ document.body.addEventListener("keyup", function(e) {
 						}
 					}
 				}
-			rannum();
+			if(check()) {
+				rannum();
+			}
+			assign();
 			display();break;
+
 		case "ArrowUp":
 				for(let i=0;i<4;i++) {
 					let count=0;
@@ -128,8 +159,12 @@ document.body.addEventListener("keyup", function(e) {
 						}
 					}
 				}
-			rannum();
+			if(check()) {
+				rannum();
+			}
+			assign();
 			display();break;
+
 		case "ArrowDown":
 				for(let i=0;i<4;i++) {
 					let count=3;
@@ -153,9 +188,11 @@ document.body.addEventListener("keyup", function(e) {
 						}
 					}
 				}
-			rannum();
+			if(check()) {
+				rannum();
+			}
+			assign();
 			display();break;
 
-			
 	}
 });
