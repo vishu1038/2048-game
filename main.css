@@ -47,7 +47,7 @@ table, td {
 
 table {
 	background-color: #5D6D7E;
-	margin-top: 40px;
+	margin-top: 10px;
 	margin-left: 20px;
 
 }
@@ -65,9 +65,9 @@ button {
 	font-family: 'Open Sans' , sans-serif;
 	font-size: 20px;
 	height: 35px;
-	position: fixed;
-	left : 590px;
-	top : 115px;
+	position: relative;
+	margin-left: 20px;
+	top : -40px;
 	border-radius: 4px;
 	border: 0px;
 	color: white;
@@ -79,10 +79,11 @@ button {
 	height: 40px;
 	background-color: inherit;
 	position: relative;
-	top: 20px;
+	top: 0px;
 	margin-left: 20px; 
 	border-radius: 4px;
 	text-align: center;
 	font-size: 20px;
 	padding-top: 7px;
+	color: white;
 }
