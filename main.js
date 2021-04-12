@@ -1,6 +1,46 @@
-var arr = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
-var prev = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+var arr = [];
+var prev = [];
 var score=0;
+
+function checkGame() {
+
+	for(let i=0;i<4;i++) {
+		for(let j=0;j<4;j++) {
+			if(arr[i][j]==2048) {
+				document.getElementById("mssg").innerHTML= "You Won! Your Score: " + score;
+				document.getElementById("mssg").style.color= "#2ECC71";
+				document.body.removeEventListener("keyup",array);
+			}
+		}
+	}
+	let flag=1;
+	for(let i=0;i<4;i++) {
+		for(let j=0;j<4;j++) {
+			if(arr[i][j]==0) {
+				flag=0;
+			}
+		}
+	}
+	for(let i=0;i<4;i++) {
+		for(let j=0;j<3;j++) {
+			if(arr[i][j]==arr[i][j+1]) {
+				flag=0;
+			}
+		}
+	}
+	for(let i=0;i<4;i++) {
+		for(let j=0;j<3;j++) {
+			if(arr[j][i]==arr[j+1][i]) {
+				flag=0;
+			}
+		}
+	}
+	if(flag) {
+		document.getElementById("mssg").innerHTML= "Game Over! Your Score: " + score;
+		document.getElementById("mssg").style.color= "#F44336";
+		document.body.removeEventListener("keyup",array);	
+	}
+}
 
 function checkMove() {
 	let flag=0;
@@ -73,6 +113,11 @@ function display() {
 }
 
 function start() {
+	document.getElementById("mssg").innerHTML= "";
+	arr = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+	prev = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+	score =0 ;
+	updateScore();
 	let num=[2,4];
 	let x1=rnd(1,16);
 	let x2=rnd(1,16);
@@ -84,6 +129,7 @@ function start() {
 	arr[~~(x1/4)][~~(x1%4)]=num[rnd(0,1)];
 	arr[~~(x2/4)][~~(x2%4)]=num[rnd(0,1)];
 	display();
+	document.body.addEventListener("keyup", array);
 }
 
 function rannum() {
@@ -101,9 +147,7 @@ function rannum() {
 	arr[~~(x/4)][~~(x%4)]=y;
 }
 
-start();
-
-document.body.addEventListener("keyup", function(e) {
+function array(e) {
 	switch(e.key) {
 
 		case "ArrowLeft":
@@ -135,7 +179,8 @@ document.body.addEventListener("keyup", function(e) {
 			}
 			assign();
 			updateScore();
-			display();break;
+			display();
+			checkGame();break;
 
 		case "ArrowRight":
 				for(let i=0;i<4;i++) {
@@ -166,7 +211,8 @@ document.body.addEventListener("keyup", function(e) {
 			}
 			assign();
 			updateScore();
-			display();break;
+			display();
+			checkGame();break;
 
 		case "ArrowUp":
 				for(let i=0;i<4;i++) {
@@ -197,7 +243,8 @@ document.body.addEventListener("keyup", function(e) {
 			}
 			assign();
 			updateScore();
-			display();break;
+			display();
+			checkGame();break;
 
 		case "ArrowDown":
 				for(let i=0;i<4;i++) {
@@ -228,7 +275,10 @@ document.body.addEventListener("keyup", function(e) {
 			}
 			assign();
 			updateScore();
-			display();break;
+			display();
+			checkGame();break;
 
 	}
-});
+}
+
+start();
